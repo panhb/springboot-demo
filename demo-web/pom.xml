@@ -15,16 +15,15 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.panhb.demo</groupId>
 			<artifactId>controller</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
 		</dependency>
 	</dependencies>
 

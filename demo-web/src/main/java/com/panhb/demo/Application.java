@@ -11,6 +11,7 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -23,6 +24,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.panhb.demo.constants.Constants;
 
 @SpringBootApplication
+@ServletComponentScan
 public class Application {
 	
 	/**

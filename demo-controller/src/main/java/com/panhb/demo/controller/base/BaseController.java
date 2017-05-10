@@ -1,10 +1,9 @@
 package com.panhb.demo.controller.base;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -12,7 +11,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.io.Files;
 import com.panhb.demo.constants.Constants;
 import com.panhb.demo.model.page.PageInfo;
 
@@ -127,16 +126,16 @@ public class BaseController {
 		OutputStream os = null;
 		try {
 			os = response.getOutputStream();
-			reFileName = URLDecoder.decode(reFileName, "utf-8");
-			response.setHeader("Content-Type", "application/x-zip-compressed");
+			String userAgent = request.getHeader("User-Agent");  
+			if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {  
+				reFileName = URLEncoder.encode(reFileName, "UTF-8");  
+			} else {  
+				reFileName = new String(reFileName.getBytes("UTF-8"), "ISO8859-1");  
+			}  
 			response.setHeader("Content-Disposition", "attachment; filename=" + reFileName);
-			FileInputStream fis = new FileInputStream(file);
-			byte[] buf = new byte[1024];
-			int len = 0;
-			while((len = fis.read(buf)) != -1){
-				os.write(buf, 0 , len);
-			}
-			fis.close();
+			response.setContentType("application/octet-stream;charset=utf-8");  
+            response.setCharacterEncoding("UTF-8");
+			Files.copy(file, os);
 		} catch (Exception e) {
 			log.error("", e);
 		} finally{
@@ -151,17 +150,16 @@ public class BaseController {
 	}
 	
 	public File uploadFile(MultipartFile uploadFile){
-		File file = null;
-		if (!uploadFile.isEmpty()) {  
+		if (uploadFile != null && !uploadFile.isEmpty()) {  
 			try {
 				String path = UUID.randomUUID().toString()+"_"+uploadFile.getOriginalFilename();
-				file = new File(path);
-				FileUtils.writeByteArrayToFile(file, uploadFile.getBytes());
+				File file = new File(path);
+				Files.write(uploadFile.getBytes(), file);
 			}catch (Exception e) { 
 				log.error("", e);
 			}
 		}
-		return file;
+		return null;
 	}
 	
 	public PageInfo initPageInfo(Integer pageNo,Integer pageSize){
