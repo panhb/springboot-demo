@@ -12,7 +12,7 @@ public class UserControllerTest extends BaseTest {
 	private RestTemplate template = new RestTemplate();
 	
 	@Test
-	public void testTacticsQuery() {
+	public void testUserQuery() {
 		String url = "http://127.0.0.1:8080/user/index";
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<String, Object>();
 		String result = template.postForObject(url, param, String.class);

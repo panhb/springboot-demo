@@ -16,13 +16,7 @@
 	</parent>
 	
 	<dependencies>
-		<!-- Springboot libs 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-dependencies</artifactId>
-			<version>${spring.boot.version}</version>
-			<type>pom</type>
-		</dependency>-->
+		<!-- Springboot libs -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
