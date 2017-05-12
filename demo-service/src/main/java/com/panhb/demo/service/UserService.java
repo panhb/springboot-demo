@@ -27,4 +27,6 @@ public interface UserService extends BaseService<User,Long>{
 	public void delete(List<User> entities);
 	
 	public void deleteAll();
+	
+	public User findByUserName(String userName);
 }

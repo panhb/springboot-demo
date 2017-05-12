@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.panhb.demo.dao.UserDao;
+import com.panhb.demo.dao.UserRepository;
 import com.panhb.demo.entity.User;
 import com.panhb.demo.service.UserService;
 import com.panhb.demo.service.base.BaseServiceImpl;
@@ -14,42 +14,47 @@ import com.panhb.demo.service.base.BaseServiceImpl;
 public class UserServiceImpl extends BaseServiceImpl<User,Long> implements UserService{
 	
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userRepository;
 	
 	public User findById(Long id) {
-		return userDao.findOne(id);
+		return userRepository.findOne(id);
 	}
 
 	public List<User> findAll() {
-		return userDao.findAll();
+		return userRepository.findAll();
 	}
 
 	public User save(User user) {
-		return userDao.save(user);
+		return userRepository.save(user);
 	}
 
 	public boolean exists(Long id) {
-		return userDao.exists(id);
+		return userRepository.exists(id);
 	}
 
 	public long count() {
-		return userDao.count();
+		return userRepository.count();
 	}
 
 	public void delete(Long id) {
-		userDao.delete(id);
+		userRepository.delete(id);
 	}
 
 	public void delete(User entity) {
-		userDao.delete(entity);
+		userRepository.delete(entity);
 	}
 
 	public void delete(List<User> entities) {
-		userDao.delete(entities);
+		userRepository.delete(entities);
 	}
 
 	public void deleteAll() {
-		userDao.deleteAll();
+		userRepository.deleteAll();
+	}
+
+	@Override
+	public User findByUserName(String userName) {
+		return userRepository.findByUserName(userName);
 	}
 	
 }

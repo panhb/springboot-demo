@@ -9,82 +9,92 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.google.common.base.MoreObjects;
 import com.panhb.demo.model.base.BaseModel;
 @Entity
-@Table(name = "t_user")
-public class User extends BaseModel{
+@Table(name = "t_role")
+public class Role extends BaseModel{
 
 	private static final long serialVersionUID = 775638143722924325L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String userName;
-	@JsonIgnore
-	private String passWord;
+	private String roleName;
+	private String status;
 	private Date createDate;
+	private Date updateDate;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "t_user_role",
-		joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName ="id")})
-	private List<Role> roles;
+	@JoinTable(name = "t_role_permission",
+		joinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "id")},
+			inverseJoinColumns = {@JoinColumn(name = "permissionId", referencedColumnName ="id")})
+	private List<Permission> permissions;
 	
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public String getUserName() {
-		return userName;
+
+	public String getRoleName() {
+		return roleName;
 	}
-	
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-	
-	public String getPassWord() {
-		return passWord;
+
+	public String getStatus() {
+		return status;
 	}
-	
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
+
 	public Date getCreateDate() {
 		return createDate;
 	}
-	
+
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
-	public List<Role> getRoles() {
-		return roles;
+
+	public Date getUpdateDate() {
+		return updateDate;
 	}
-	
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
-	
+
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.add("id", id)
-				.add("userName", userName)
-				.add("passWord", passWord)
+				.add("roleName", roleName)
+				.add("status", status)
 				.add("createDate", createDate)
-				.add("roles", roles)
+				.add("updateDate", updateDate)
+				.add("permissions", permissions)
 				.toString();
 		
 	}
