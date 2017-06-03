@@ -58,6 +58,10 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>net.sourceforge.jchardet</groupId>
+		    <artifactId>jchardet</artifactId>
+		</dependency>
 		<!-- Test libs -->
 		<dependency>
 			<groupId>junit</groupId>

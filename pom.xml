@@ -45,6 +45,7 @@
 		<commons.exec.version>1.1</commons.exec.version>
 		<guava.version>18.0</guava.version>
 		<druid.version>1.0.29</druid.version>
+		<jchardet.version>1.0</jchardet.version>
 		<swagger2.version>2.6.1</swagger2.version>
 		<!-- Log libs -->
 		<slf4j.version>1.7.25</slf4j.version>
@@ -184,6 +185,12 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
+			</dependency>
+			<!-- 检测文件字符编码 -->
+			<dependency>
+			    <groupId>net.sourceforge.jchardet</groupId>
+			    <artifactId>jchardet</artifactId>
+			    <version>${jchardet.version}</version>
 			</dependency>
 			<!-- Swagger2 libs -->
 			<dependency>
