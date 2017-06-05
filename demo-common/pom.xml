@@ -62,6 +62,10 @@
 		    <groupId>net.sourceforge.jchardet</groupId>
 		    <artifactId>jchardet</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+		</dependency>
 		<!-- Test libs -->
 		<dependency>
 			<groupId>junit</groupId>
