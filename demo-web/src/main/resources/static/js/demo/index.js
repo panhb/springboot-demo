@@ -18,7 +18,7 @@ var vm = new Vue({
 })
 
 axios.get('/user/index').then(function(response){
-  alert(response.data.list[0].createDate)
+  alert(response.data.list[0].createDate);
 })
 
 
