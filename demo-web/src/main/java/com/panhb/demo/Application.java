@@ -26,7 +26,19 @@ import com.panhb.demo.constants.Constants;
 @SpringBootApplication
 @ServletComponentScan
 public class Application {
-	
+
+	/**
+	 * 多语言控制
+	 * @return
+	 */
+	@Bean
+	public LocaleResolver localeResolver() {
+		CookieLocaleResolver clr = new CookieLocaleResolver();
+		clr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+		clr.setCookieMaxAge(Constants.DEFAULT_LANGUAGE_COOKIE_TIME);//设置cookie有效期.
+		return clr;
+	}
+
 	/**
 	 * fastjson组件：初始化
 	 * @return
@@ -40,19 +52,7 @@ public class Application {
        HttpMessageConverter<?> converter = fastConverter;
        return new HttpMessageConverters(converter);
     }
-	
-	/**
-	 * 多语言控制
-	 * @return
-	 */
-	@Bean  
-    public LocaleResolver localeResolver() {  
-		CookieLocaleResolver clr = new CookieLocaleResolver();  
-		clr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);  
-		clr.setCookieMaxAge(Constants.DEFAULT_LANGUAGE_COOKIE_TIME);//设置cookie有效期.
-        return clr;  
-    }
-	
+
 	/**
 	 * 上传文件大小限制设置
 	 * @return
