@@ -72,6 +72,10 @@ spring :
       # ===============================
       #rest :
         #basePath : /api
+  http :
+    multipart :
+      maxFileSize : 1024MB
+      maxRequestSize : 10240MB
 
   # ===============================
   # = i18n setting.
