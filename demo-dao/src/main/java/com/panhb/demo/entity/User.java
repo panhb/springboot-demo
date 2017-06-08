@@ -72,7 +72,7 @@ public class User extends BaseModel{
 	public List<Role> getRoles() {
 		return roles;
 	}
-	
+
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
@@ -86,7 +86,6 @@ public class User extends BaseModel{
 				.add("createDate", createDate)
 				.add("roles", roles)
 				.toString();
-		
 	}
 	
 	

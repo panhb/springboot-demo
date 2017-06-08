@@ -15,6 +15,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
@@ -25,6 +26,7 @@ import com.panhb.demo.constants.Constants;
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableTransactionManagement
 public class Application {
 
 	/**
@@ -35,7 +37,6 @@ public class Application {
 	public LocaleResolver localeResolver() {
 		CookieLocaleResolver clr = new CookieLocaleResolver();
 		clr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
-		clr.setCookieMaxAge(Constants.DEFAULT_LANGUAGE_COOKIE_TIME);//设置cookie有效期.
 		return clr;
 	}
 

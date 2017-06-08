@@ -10,6 +10,8 @@ public class Constants {
 	public static final int DEFAULT_PAGENO = 1;
 	public static final int DEFAULT_PAGESIZE = 10;
 	
-	public static final int DEFAULT_LANGUAGE_COOKIE_TIME = 3600;
+	public static final int DEFAULT_COOKIE_TIME = 259200;
+
+	public static final int DEFAULT_SESSION_TIME = 1800000;
 	
 }

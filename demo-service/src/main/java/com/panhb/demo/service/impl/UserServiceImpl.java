@@ -1,5 +1,6 @@
 package com.panhb.demo.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import com.panhb.demo.dao.UserRepository;
 import com.panhb.demo.entity.User;
 import com.panhb.demo.service.UserService;
 import com.panhb.demo.service.base.BaseServiceImpl;
+
+import javax.transaction.Transactional;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User,Long> implements UserService{
