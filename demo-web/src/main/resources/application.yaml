@@ -75,7 +75,7 @@ spring :
   http :
     multipart :
       maxFileSize : 1024MB
-      maxRequestSize : 10240MB
+      maxRequestSize : 1024MB
 
   # ===============================
   # = i18n setting.
