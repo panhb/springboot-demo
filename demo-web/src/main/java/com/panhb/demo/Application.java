@@ -53,17 +53,6 @@ public class Application {
        return new HttpMessageConverters(converter);
     }
 
-	/**
-	 * 上传文件大小限制设置
-	 * @return
-	 */
-	@Bean  
-    public MultipartConfigElement multipartConfigElement() {  
-        MultipartConfigFactory factory = new MultipartConfigFactory();  
-        factory.setMaxFileSize("1024MB");  
-        factory.setMaxRequestSize("1024MB");  
-        return factory.createMultipartConfig();  
-    }
 	
 	/**
 	 * 404,500页面自定义
