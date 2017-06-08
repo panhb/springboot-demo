@@ -29,4 +29,5 @@ public interface UserService extends BaseService<User,Long>{
 	public void deleteAll();
 	
 	public User findByUserName(String userName);
+
 }

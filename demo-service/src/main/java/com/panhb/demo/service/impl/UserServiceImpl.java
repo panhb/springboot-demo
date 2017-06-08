@@ -56,5 +56,5 @@ public class UserServiceImpl extends BaseServiceImpl<User,Long> implements UserS
 	public User findByUserName(String userName) {
 		return userRepository.findByUserName(userName);
 	}
-	
+
 }
