@@ -1,7 +1,13 @@
 package com.panhb.demo.shiro;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Maps;
 import com.panhb.demo.constants.Constants;
+import com.panhb.demo.dao.PermissionRepository;
+import com.panhb.demo.entity.Permission;
+import com.panhb.demo.service.PermissionService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -27,6 +33,7 @@ import javax.crypto.SecretKey;
 import javax.servlet.Filter;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -137,8 +144,9 @@ public class ShiroConfiguration {
         return aasa;
     }
 	
-	@Bean(name = "shiroFilter")
-	public ShiroFilterFactoryBean shiroFilterFactoryBean(){
+//	@Bean(name = "shiroFilter")
+	@Bean
+	public ShiroFilterFactoryBean shiroFilterFactoryBean(PermissionRepository permissionRepository){
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager());
 		shiroFilterFactoryBean.setLoginUrl("/login");
@@ -151,11 +159,17 @@ public class ShiroConfiguration {
 		filters.put("logout", logoutFilter);
 		shiroFilterFactoryBean.setFilters(filters);
 		
-		Map<String, String> chains = new LinkedHashMap<String, String>();
+		Map<String, String> chains = Maps.newHashMap();
 		chains.put("/logout", "logout");
+		List<Permission> list = permissionRepository.findAll();
+		if(!FluentIterable.from(list).isEmpty()){
+			for (Permission permission : list){
+				chains.put(permission.getUrl(), "anon");
+			}
+		}
 //		chains.put("/**", "authc,perms[user:select]");  示例  按权限控制
 //		chains.put("/**", "authc,roles[user]"); 示例  按角色控制
-		chains.put("/**", "anon");
+		chains.put("/**", "authc");
 		log.info("************权限控制:"+ JSON.toJSONString(chains));
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(chains);
 		

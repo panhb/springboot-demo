@@ -7,12 +7,20 @@ public class Result {
 	public Result() {
 	}
 
+	public static Result success() {
+		return new Result(Constants.SUCCESS, "");
+	}
+
 	public static Result success(String msg) {
 		return new Result(Constants.SUCCESS, msg);
 	}
 	
 	public static Result success(String msg, Object info){
 		return new Result(Constants.SUCCESS, msg, info);
+	}
+
+	public static Result error() {
+		return new Result(Constants.ERROR, "");
 	}
 	
 	public static Result error(String msg){

@@ -14,7 +14,7 @@ public interface UserService extends BaseService<User,Long>{
 	
 	public List<User> findAll();
 	
-	public User save(User user);
+	public User save(User entity);
 	
 	public boolean exists(Long id);
 	

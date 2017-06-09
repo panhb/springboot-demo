@@ -27,8 +27,8 @@ public class UserServiceImpl extends BaseServiceImpl<User,Long> implements UserS
 		return userRepository.findAll();
 	}
 
-	public User save(User user) {
-		return userRepository.save(user);
+	public User save(User entity) {
+		return userRepository.save(entity);
 	}
 
 	public boolean exists(Long id) {
