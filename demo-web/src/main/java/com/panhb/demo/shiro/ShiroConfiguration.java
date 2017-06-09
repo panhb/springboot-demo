@@ -163,14 +163,14 @@ public class ShiroConfiguration {
 		chains.put("/logout", "logout");
 		List<Permission> list = permissionRepository.findAll();
 		if(!FluentIterable.from(list).isEmpty()){
-			for (Permission permission : list){
-				chains.put(permission.getUrl(), "anon");
-			}
+			list.forEach((p) -> {
+				chains.put(p.getUrl(), "anon");
+			});
 		}
 //		chains.put("/**", "authc,perms[user:select]");  示例  按权限控制
 //		chains.put("/**", "authc,roles[user]"); 示例  按角色控制
 		chains.put("/**", "authc");
-		log.info("************权限控制:"+ JSON.toJSONString(chains));
+		log.info("************初始化的权限控制:"+ JSON.toJSONString(chains));
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(chains);
 		
 		return shiroFilterFactoryBean;

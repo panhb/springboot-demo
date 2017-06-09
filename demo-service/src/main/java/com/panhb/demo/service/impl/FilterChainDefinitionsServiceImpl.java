@@ -1,6 +1,7 @@
 package com.panhb.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 import com.panhb.demo.dao.PermissionRepository;
 import com.panhb.demo.entity.Permission;
@@ -39,7 +40,6 @@ public class FilterChainDefinitionsServiceImpl implements FilterChainDefinitions
             AbstractShiroFilter shiroFilter = null;
             try {
                 shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
-
                 PathMatchingFilterChainResolver resolver = (PathMatchingFilterChainResolver) shiroFilter
                         .getFilterChainResolver();
                 // 过滤管理器
@@ -49,13 +49,13 @@ public class FilterChainDefinitionsServiceImpl implements FilterChainDefinitions
                 shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
                 Map<String, String> chains = Maps.newHashMap();
                 List<Permission> list = permissionRepository.findAll();
-                if(CollectionUtils.isNotEmpty(list)){
-                    for(Permission p: list){
+                if(!FluentIterable.from(list).isEmpty()){
+                    list.forEach((p) -> {
                         chains.put(p.getUrl(), "anon");
-                    }
+                    });
                 }
                 chains.put("/**", "authc");
-                log.info("******权限控制:"+ JSON.toJSONString(chains));
+                log.info("******更新后的权限控制:"+ JSON.toJSONString(chains));
                 shiroFilterFactoryBean.setFilterChainDefinitionMap(chains);
             }catch (Exception e){
                 log.error("",e);
