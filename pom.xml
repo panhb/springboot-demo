@@ -39,21 +39,21 @@
 		<junit.version>4.12</junit.version>
 	</properties>
 
+	<modules>
+		<module>demo-common</module>
+		<module>demo-model</module>
+		<module>demo-api</module>
+		<module>demo-dao</module>
+		<module>demo-service</module>
+		<module>demo-controller</module>
+		<module>demo-web</module>
+	</modules>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.3.RELEASE</version>
 	</parent>
-
-	<modules>
-		<module>demo-api</module>
-		<module>demo-common</module>
-		<module>demo-controller</module>
-		<module>demo-service</module>
-		<module>demo-dao</module>
-		<module>demo-model</module>
-		<module>demo-web</module>
-	</modules>
 
 	<developers>
         <developer>
@@ -66,11 +66,10 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Springboot libs -->
+			<!-- Springboot libs
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-data-jpa</artifactId>
-				<version>${spring.boot.version}</version>
 				<exclusions>
 			        <exclusion> 
 			            <groupId>org.springframework.boot</groupId>
@@ -81,12 +80,10 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter</artifactId>
-				<version>${spring.boot.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${spring.boot.version}</version>
 				<exclusions>
 			        <exclusion> 
 			            <groupId>org.springframework.boot</groupId>
@@ -97,7 +94,6 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
-				<version>${spring.boot.version}</version>
 				<exclusions>
 			        <exclusion> 
 			            <groupId>org.springframework.boot</groupId>
@@ -108,7 +104,6 @@
 			<dependency>
 			    <groupId>org.springframework.boot</groupId>
 			    <artifactId>spring-boot-starter-actuator</artifactId>
-			    <version>${spring.boot.version}</version>
 			    <exclusions>
 			        <exclusion> 
 			            <groupId>org.springframework.boot</groupId>
@@ -119,17 +114,16 @@
 			<dependency>
 			    <groupId>org.springframework.boot</groupId>
 			    <artifactId>spring-boot-starter-data-rest</artifactId>
-			    <version>${spring.boot.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.springframework.boot</groupId>
 			    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-			    <version>${spring.boot.version}</version>
 			</dependency>
+			-->
 			<dependency>
-			    <groupId>org.springframework.boot</groupId>
-			    <artifactId>spring-boot-starter-log4j</artifactId>
-			    <version>${spring.boot.log4j.version}</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-log4j</artifactId>
+				<version>${spring.boot.log4j.version}</version>
 			</dependency>
 			<!-- Common libs -->
 			<dependency>

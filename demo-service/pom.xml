@@ -16,8 +16,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.panhb.demo</groupId>
+			<groupId>com.panhb</groupId>
 			<artifactId>dao</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 

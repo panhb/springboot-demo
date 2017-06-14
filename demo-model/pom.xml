@@ -16,12 +16,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.panhb.demo</groupId>
+			<groupId>com.panhb</groupId>
 			<artifactId>common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 

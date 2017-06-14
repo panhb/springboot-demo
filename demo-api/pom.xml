@@ -16,12 +16,14 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.panhb.demo</groupId>
+			<groupId>com.panhb</groupId>
 			<artifactId>common</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.panhb.demo</groupId>
+			<groupId>com.panhb</groupId>
 			<artifactId>model</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 

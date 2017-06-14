@@ -16,12 +16,19 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.panhb.demo</groupId>
+			<groupId>com.panhb</groupId>
 			<artifactId>service</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
