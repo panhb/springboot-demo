@@ -176,7 +176,7 @@ public class BaseController {
 		String rangeBytes = "";
 		response.reset(); // 告诉客户端允许断点续传多线程连接下载,响应的格式是:Accept-Ranges: bytes
 		response.setHeader( "Accept-Ranges", "bytes" );
-		String range = response.getHeader("Range");
+		String range = request.getHeader("Range");
 		if(!Strings.isNullOrEmpty(range)){
 			rangeBytes = range.replaceAll("bytes=" , "" );
 			response.setStatus(HttpServletResponse. SC_PARTIAL_CONTENT);
@@ -243,7 +243,7 @@ public class BaseController {
 							readLength += 1024;
 							out.write(b, 0, m);
 						}
-						if (readLength <= contentLength) {// 大部分字节在这里读取
+						if (readLength <= contentLength) {
 							m = raf.read(b, 0, (int)(contentLength - readLength));
 							out.write(b, 0, m);
 						}
