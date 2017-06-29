@@ -1,8 +1,6 @@
 package com.panhb.demo.controller.base;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.UUID;
@@ -11,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,5 +165,120 @@ public class BaseController {
 		pageNo = pageNo == null ? Constants.DEFAULT_PAGENO : pageNo;
 		pageSize = pageSize == null ? Constants.DEFAULT_PAGESIZE : pageSize;
 		return new PageInfo(pageNo, pageSize);
+	}
+
+	public void breakPointDownload(File file){
+		long fileLength = file.length();
+		long pastLength = 0; // 记录已下载文件大小
+		int rangeSwitch = 0; // 0：从头开始的全文下载；1：从某字节开始的下载（bytes=27000-）；2：从某字节开始到某字节结束的下载（bytes=27000-39000）
+		long toLength = 0; // 记录客户端需要下载的字节段的最后一个字节偏移量（比如bytes=27000-39000，则这个值是为39000）
+		long contentLength = 0; // 客户端请求的字节总量
+		String rangeBytes = "";
+		response.reset(); // 告诉客户端允许断点续传多线程连接下载,响应的格式是:Accept-Ranges: bytes
+		response.setHeader( "Accept-Ranges", "bytes" );
+		String range = response.getHeader("Range");
+		if(!Strings.isNullOrEmpty(range)){
+			rangeBytes = range.replaceAll("bytes=" , "" );
+			response.setStatus(HttpServletResponse. SC_PARTIAL_CONTENT);
+			if (rangeBytes.endsWith("-")) { // bytes=969998336-
+				rangeSwitch = 1;
+				rangeBytes = rangeBytes.split("-")[0].trim();
+				pastLength = Long.parseLong(rangeBytes.trim());
+				contentLength = fileLength - pastLength; // 客户端请求的是 969998336 之后的字节
+			} else { // bytes=1275856879-1275877358
+				rangeSwitch = 2;
+				String temp0 = rangeBytes.split("-")[0].trim();
+				String temp1 = rangeBytes.split("-")[1].trim();
+				pastLength = Long.parseLong(temp0);
+				toLength = Long.parseLong(temp1);
+				contentLength = toLength - pastLength;
+			}
+		}else{
+			contentLength = fileLength;
+		}
+		// Content-Range: bytes [文件块的开始字节]-[文件的总大小 - 1]/[文件的总大小]
+		if (pastLength != 0) {
+			switch (rangeSwitch) {
+				case 1:
+					String contentRange = new StringBuffer("bytes ").append(new Long(pastLength).toString())
+							.append("-").append(new Long(fileLength - 1).toString()).append("/")
+							.append(new Long(fileLength).toString()).toString();
+					response.setHeader( "Content-Range", contentRange);
+					break;
+				case 2:
+					String contentRange2 = rangeBytes + "/" + new Long(fileLength).toString();
+					response.setHeader( "Content-Range", contentRange2);
+					break;
+				default:
+					break;
+			}
+		}
+		RandomAccessFile raf = null; // 负责读取数据
+		OutputStream os = null; // 写出数据
+		OutputStream out = null; // 缓冲
+		byte[] b = new byte[1024]; // 暂存容器
+		try {
+			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+			response.setContentType("application/octet-stream;charset=utf-8");
+			response.setHeader( "Content-Length", String.valueOf(contentLength));
+			os = response.getOutputStream();
+			out = new BufferedOutputStream(os);
+			raf = new RandomAccessFile(file, "r");
+			try {
+				switch (rangeSwitch) {
+					case 0:
+					case 1:
+						raf.seek(pastLength);
+						int n = 0;
+						while ((n = raf.read(b, 0, 1024)) != -1) {
+							out.write(b, 0, n);
+						}
+						break;
+					case 2:
+						raf.seek(pastLength);
+						int m = 0;
+						long readLength = 0; // 记录已读字节数
+						while (readLength <= contentLength - 1024) {// 大部分字节在这里读取
+							m = raf.read(b, 0, 1024);
+							readLength += 1024;
+							out.write(b, 0, m);
+						}
+						if (readLength <= contentLength) {// 大部分字节在这里读取
+							m = raf.read(b, 0, (int)(contentLength - readLength));
+							out.write(b, 0, m);
+						}
+						break;
+					default:
+						break;
+				}
+				out.flush();
+			}catch (IOException e){
+				log.error("", e);
+			}
+		}catch (IOException e){
+			log.error("", e);
+		}finally{
+			if(os != null){
+				try {
+					os.close();
+				} catch (IOException e) {
+					log.error("", e);
+				}
+			}
+			if(out != null){
+				try {
+					out.close();
+				} catch (IOException e) {
+					log.error("", e);
+				}
+			}
+			if(raf  != null){
+				try {
+					raf .close();
+				} catch (IOException e) {
+					log.error("", e);
+				}
+			}
+		}
 	}
 }
