@@ -9,7 +9,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
+import com.panhb.demo.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,18 +151,27 @@ public class BaseController {
 	}
 	
 	public File uploadFile(MultipartFile uploadFile){
-		if (uploadFile != null && !uploadFile.isEmpty()) {  
+		String destPath = UUID.randomUUID().toString()+"_"+uploadFile.getOriginalFilename();
+		return uploadFile(uploadFile,destPath);
+	}
+
+	public File uploadFile(MultipartFile uploadFile,String destPath){
+		if (uploadFile != null && !uploadFile.isEmpty()) {
 			try {
-				String path = UUID.randomUUID().toString()+"_"+uploadFile.getOriginalFilename();
-				File file = new File(path);
+				File file = new File(destPath);
+				if(file.exists())
+					file.delete();
+				if(!file.getParentFile().exists())
+					file.getParentFile().mkdirs();
 				Files.write(uploadFile.getBytes(), file);
-			}catch (Exception e) { 
+				return file;
+			}catch (Exception e) {
 				log.error("", e);
 			}
 		}
 		return null;
 	}
-	
+
 	public PageInfo initPageInfo(Integer pageNo,Integer pageSize){
 		pageNo = pageNo == null ? Constants.DEFAULT_PAGENO : pageNo;
 		pageSize = pageSize == null ? Constants.DEFAULT_PAGESIZE : pageSize;
@@ -175,6 +186,7 @@ public class BaseController {
 		long contentLength = 0; // 客户端请求的字节总量
 		String rangeBytes = "";
 		response.reset(); // 告诉客户端允许断点续传多线程连接下载,响应的格式是:Accept-Ranges: bytes
+		response.setHeader( "File-Md5", FileUtils.getFileMd5(file));
 		response.setHeader( "Accept-Ranges", "bytes" );
 		String range = request.getHeader("Range");
 		if(!Strings.isNullOrEmpty(range)){
@@ -191,6 +203,8 @@ public class BaseController {
 				String temp1 = rangeBytes.split("-")[1].trim();
 				pastLength = Long.parseLong(temp0);
 				toLength = Long.parseLong(temp1);
+				if(toLength > fileLength)
+					toLength = fileLength;
 				contentLength = toLength - pastLength;
 			}
 		}else{
@@ -279,6 +293,30 @@ public class BaseController {
 					log.error("", e);
 				}
 			}
+		}
+	}
+
+	public void printJson(Object obj){
+		response.setContentType("application/json;charset=utf-8");
+		try {
+			PrintWriter pw = response.getWriter();
+			pw.write(JSON.toJSONString(obj));
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			log.error("", e);
+		}
+	}
+
+	public void printJson(String str){
+		response.setContentType("application/json;charset=utf-8");
+		try {
+			PrintWriter pw = response.getWriter();
+			pw.write(str);
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			log.error("", e);
 		}
 	}
 }

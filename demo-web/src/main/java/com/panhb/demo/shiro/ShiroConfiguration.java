@@ -169,7 +169,7 @@ public class ShiroConfiguration {
 		}
 //		chains.put("/**", "authc,perms[user:select]");  示例  按权限控制
 //		chains.put("/**", "authc,roles[user]"); 示例  按角色控制
-		chains.put("/**", "authc");
+		chains.put("/**", "anon");
 		log.info("************初始化的权限控制:"+ JSON.toJSONString(chains));
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(chains);
 		
