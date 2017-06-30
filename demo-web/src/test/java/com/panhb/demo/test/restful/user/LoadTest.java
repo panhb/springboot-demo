@@ -78,7 +78,7 @@ public class LoadTest extends BaseTest {
 		String destPath = "D:\\split\\"+ UUID.randomUUID().toString();
 		File srcFile = new File(srcPath);
 		String file_md5 = FileUtils.getFileMd5(srcFile);
-		int chunk_num = FileUtils.split(srcPath,1*1024,destPath);
+		int chunk_num = FileUtils.split(srcPath,1,destPath);
 		File[] files = new File(destPath).listFiles();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Accept", "application/json;charset=utf-8");

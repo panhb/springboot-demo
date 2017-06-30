@@ -2,6 +2,7 @@ package com.panhb.demo.utils;
 
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
+import com.sun.prism.shader.FillEllipse_Color_AlphaTest_Loader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -31,37 +32,44 @@ public class FileUtils {
         if (fpaths.length == 1) {
             return new File(fpaths[0]).renameTo(new File(resultPath));
         }
-        File[] files = new File[fpaths.length];
-        for (int i = 0; i < fpaths.length; i ++) {
-            files[i] = new File(fpaths[i]);
-            if (Strings.isNullOrEmpty(fpaths[i]) || !files[i].exists() || !files[i].isFile()) {
-                return false;
-            }
-        }
         File resultFile = new File(resultPath);
+        OutputStream  os = null;
+        BufferedOutputStream bos = null;
         try {
             int bufSize = 1024;
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFile));
+            os = new FileOutputStream(resultFile);
+            bos = new BufferedOutputStream(os);
             byte[] buffer = new byte[bufSize];
-
             for (int i = 0; i < fpaths.length; i ++) {
-                BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(files[i]));
-                int readcount;
-                while ((readcount = inputStream.read(buffer)) > 0) {
-                    outputStream.write(buffer, 0, readcount);
+                File tmp = new File(fpaths[i]);
+                if (Strings.isNullOrEmpty(fpaths[i]) || !tmp.exists() || !tmp.isFile()) {
+                    return false;
                 }
-                inputStream.close();
+                InputStream is = new FileInputStream(tmp);
+                BufferedInputStream bis = new BufferedInputStream(is);
+                int len = -1;
+                while ((len = bis.read(buffer)) !=-1) {
+                    bos.write(buffer, 0, len);
+                }
+                bis.close();
+                is.close();
             }
-            outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                if(bos!=null)bos.close();
+                if(os!=null)os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         for (int i = 0; i < fpaths.length; i ++) {
-            files[i].delete();
+            new File(fpaths[i]).delete();
         }
         return true;
     }
@@ -73,21 +81,15 @@ public class FileUtils {
         if (fpaths.length == 1) {
             return new File(fpaths[0]).renameTo(new File(resultPath));
         }
-
-        File[] files = new File[fpaths.length];
-        for (int i = 0; i < fpaths.length; i ++) {
-            files[i] = new File(fpaths[i]);
-            if (Strings.isNullOrEmpty(fpaths[i]) || !files[i].exists() || !files[i].isFile()) {
-                return false;
-            }
-        }
-
         File resultFile = new File(resultPath);
-
         try {
             FileChannel resultFileChannel = new FileOutputStream(resultFile, true).getChannel();
             for (int i = 0; i < fpaths.length; i ++) {
-                FileChannel blk = new FileInputStream(files[i]).getChannel();
+                File tmp = new File(fpaths[i]);
+                if (Strings.isNullOrEmpty(fpaths[i]) || !tmp.exists() || !tmp.isFile()) {
+                    return false;
+                }
+                FileChannel blk = new FileInputStream(tmp).getChannel();
                 resultFileChannel.transferFrom(blk, resultFileChannel.size(), blk.size());
                 blk.close();
             }
@@ -100,7 +102,7 @@ public class FileUtils {
             return false;
         }
         for (int i = 0; i < fpaths.length; i ++) {
-            files[i].delete();
+            new File(fpaths[i]).delete();
         }
         return true;
     }
