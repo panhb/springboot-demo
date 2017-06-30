@@ -297,15 +297,7 @@ public class BaseController {
 	}
 
 	public void printJson(Object obj){
-		response.setContentType("application/json;charset=utf-8");
-		try {
-			PrintWriter pw = response.getWriter();
-			pw.write(JSON.toJSONString(obj));
-			pw.flush();
-			pw.close();
-		} catch (IOException e) {
-			log.error("", e);
-		}
+		printJson(JSON.toJSONString(obj));
 	}
 
 	public void printJson(String str){
