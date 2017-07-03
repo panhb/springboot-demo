@@ -170,4 +170,107 @@ public class FileUtils {
         return number;
     }
 
+    public static byte[] File2byte(String filePath){
+        byte[] buffer = null;
+        try{
+            File file = new File(filePath);
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int n;
+            while ((n = fis.read(b)) != -1){
+                bos.write(b, 0, n);
+            }
+            fis.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+    public static void byte2File(byte[] buf, String filePath){
+        File file = new File(filePath);
+        byte2File(buf,file.getParent(),file.getName());
+    }
+
+    public static void byte2File(byte[] buf, String filePath, String fileName){
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        try{
+            File dir = new File(filePath);
+            if (!dir.exists()){
+                dir.mkdirs();
+            }
+            File file = new File(filePath + File.separator + fileName);
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(buf);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            if (bos != null){
+                try{
+                    bos.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null){
+                try{
+                    fos.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void inputStream2File(InputStream inputStream, String filePath){
+        File file = new File(filePath);
+        inputStream2File(inputStream,file.getParent(),file.getName());
+    }
+
+    public static void inputStream2File(InputStream inputStream, String filePath, String fileName){
+        OutputStream os = null;
+        try{
+            File dir = new File(filePath);
+            if (!dir.exists()){
+                dir.mkdirs();
+            }
+            File file = new File(filePath + File.separator + fileName);
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            os = new FileOutputStream(file);
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = inputStream.read(buffer, 0, 1024)) != -1) {
+                os.write(buffer, 0, len);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            if (os != null){
+                try{
+                    os.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if (inputStream != null){
+                try{
+                    inputStream.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

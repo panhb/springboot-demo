@@ -2,6 +2,13 @@ package com.panhb.demo.test.restful.user;
 
 import com.panhb.demo.test.restful.BaseTest;
 import com.panhb.demo.utils.FileUtils;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -24,7 +31,7 @@ public class LoadTest extends BaseTest {
 
 	private static final String URL = "http://127.0.0.1:8080/load/";
 	
-	@Test
+//	@Test
 	public void testDownLoad() throws Exception{
 		String url = URL + "down";
 		File file = new File("D:\\test.log.tmp");
@@ -94,6 +101,49 @@ public class LoadTest extends BaseTest {
 			System.out.println("result==================="+response.getBody());
 			String fileId = response.getHeaders().get("File-Id").get(0);
 			headers.set("file_id", fileId);
+		}
+	}
+
+	@Test
+	public void testPost() throws Exception{
+		String url = URL + "up2";
+		String srcPath = "D:\\test.log";
+//		String srcPath = "D:\\demo.apk";
+		String fileId = UUID.randomUUID().toString();
+		File srcFile = new File(srcPath);
+		String fileMd5 = FileUtils.getFileMd5(srcFile);
+		long fileSize = srcFile.length();
+//		int step = 1024*1024;
+		int step = 1024;
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpPost  httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json;charset=utf-8");
+		httpPost.setHeader("file_md5", fileMd5);
+		httpPost.setHeader("file_name", srcFile.getName());
+		httpPost.setHeader("file_id", fileId);
+		httpPost.setHeader("file_size", fileSize+"");
+		httpPost.setHeader("file_step", step+"");
+		byte[] bytes = new byte[step]; // 暂存容器
+		RandomAccessFile raf = new RandomAccessFile(srcFile, "r");
+		Long start = 0L;
+		while(start < srcFile.length()){
+			raf.seek(start);
+			long tmp = start + step;
+			if(tmp > fileSize){
+				tmp = fileSize;
+				step =(int)(fileSize - start);
+				bytes = new byte[step];
+			}
+			raf.read(bytes,0,step);
+			httpPost.setHeader("chunk_md5", DigestUtils.md5Hex(bytes));
+			httpPost.setHeader("Range", "bytes="+start+"-"+tmp);
+			httpPost.setEntity(new ByteArrayEntity(bytes));
+			CloseableHttpResponse response = client.execute(httpPost);
+			int rspCode = response.getStatusLine().getStatusCode();
+//			System.out.println("rspCode:" + rspCode);
+			String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+			System.out.println("result:" + result);
+			start = tmp;
 		}
 	}
 }

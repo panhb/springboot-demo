@@ -32,6 +32,7 @@
 		<swagger2.version>2.6.1</swagger2.version>
 		<ant.version>1.9.4</ant.version>
 		<shiro.version>1.4.0</shiro.version>
+		<commons.httpclient.version>3.1</commons.httpclient.version>
 		<!-- Log libs -->
 		<slf4j.version>1.7.25</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -186,6 +187,18 @@
 				<artifactId>ant</artifactId>
 				<version>${ant.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
+			</dependency>
+			<!--
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>${commons.httpclient.version}</version>
+			</dependency>
+			-->
 			<!-- 检测文件字符编码 -->
 			<dependency>
 			    <groupId>net.sourceforge.jchardet</groupId>
