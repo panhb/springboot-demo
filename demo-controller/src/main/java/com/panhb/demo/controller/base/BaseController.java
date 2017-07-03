@@ -221,8 +221,9 @@ public class BaseController {
 					response.setHeader( "Content-Range", contentRange);
 					break;
 				case 2:
-					String contentRange2 = rangeBytes + "/" + new Long(fileLength).toString();
-					response.setHeader( "Content-Range", contentRange2);
+                    String contentRange2 = new StringBuffer("bytes ").append(rangeBytes).append("/")
+                            .append(new Long(fileLength).toString()).toString();
+                    response.setHeader( "Content-Range", contentRange2);
 					break;
 				default:
 					break;
