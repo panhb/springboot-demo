@@ -187,6 +187,7 @@ public class BaseController {
 		String rangeBytes = "";
 		response.reset(); // 告诉客户端允许断点续传多线程连接下载,响应的格式是:Accept-Ranges: bytes
 		response.setHeader( "File-Md5", FileUtils.getFileMd5(file));
+		response.setHeader( "File-Size", fileLength+"");
 		response.setHeader( "Accept-Ranges", "bytes" );
 		String range = request.getHeader("Range");
 		if(!Strings.isNullOrEmpty(range)){
