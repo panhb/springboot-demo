@@ -1,7 +1,5 @@
 package com.panhb.demo.test.restful.user;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.panhb.demo.test.restful.BaseTest;
 import com.panhb.demo.utils.FileUtils;
 import org.junit.Test;
@@ -26,7 +24,7 @@ public class LoadTest extends BaseTest {
 
 	private static final String URL = "http://127.0.0.1:8080/load/";
 	
-//	@Test
+	@Test
 	public void testDownLoad() throws Exception{
 		String url = URL + "down";
 		File file = new File("D:\\test.log.tmp");
@@ -71,7 +69,7 @@ public class LoadTest extends BaseTest {
 	}
 
 
-	@Test
+//	@Test
 	public void testUpLoad() throws Exception{
 		String url = URL + "up";
 		String srcPath = "D:\\test.log";
