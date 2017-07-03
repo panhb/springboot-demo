@@ -192,12 +192,12 @@ public class FileUtils {
         return buffer;
     }
 
-    public static void byte2File(byte[] buf, String filePath){
+    public static File byte2File(byte[] buf, String filePath){
         File file = new File(filePath);
-        byte2File(buf,file.getParent(),file.getName());
+        return byte2File(buf,file.getParent(),file.getName());
     }
 
-    public static void byte2File(byte[] buf, String filePath, String fileName){
+    public static File byte2File(byte[] buf, String filePath, String fileName){
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
         try{
@@ -206,12 +206,13 @@ public class FileUtils {
                 dir.mkdirs();
             }
             File file = new File(filePath + File.separator + fileName);
-            if (!file.exists()){
-                file.createNewFile();
+            if (file.exists()){
+                file.delete();
             }
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
             bos.write(buf);
+            return file;
         }catch (Exception e){
             e.printStackTrace();
         }finally{
@@ -230,14 +231,15 @@ public class FileUtils {
                 }
             }
         }
+        return null;
     }
 
-    public static void inputStream2File(InputStream inputStream, String filePath){
+    public static File inputStream2File(InputStream inputStream, String filePath){
         File file = new File(filePath);
-        inputStream2File(inputStream,file.getParent(),file.getName());
+        return inputStream2File(inputStream,file.getParent(),file.getName());
     }
 
-    public static void inputStream2File(InputStream inputStream, String filePath, String fileName){
+    public static File inputStream2File(InputStream inputStream, String filePath, String fileName){
         OutputStream os = null;
         try{
             File dir = new File(filePath);
@@ -245,8 +247,8 @@ public class FileUtils {
                 dir.mkdirs();
             }
             File file = new File(filePath + File.separator + fileName);
-            if (!file.exists()){
-                file.createNewFile();
+            if (file.exists()){
+                file.delete();
             }
             os = new FileOutputStream(file);
             int len = 0;
@@ -254,6 +256,7 @@ public class FileUtils {
             while ((len = inputStream.read(buffer, 0, 1024)) != -1) {
                 os.write(buffer, 0, len);
             }
+            return file;
         }catch (Exception e){
             e.printStackTrace();
         }finally{
@@ -272,5 +275,6 @@ public class FileUtils {
                 }
             }
         }
+        return null;
     }
 }
