@@ -4,6 +4,8 @@ import java.util.Locale;
 
 import javax.servlet.MultipartConfigElement;
 
+import com.panhb.demo.dao.base.BaseRepositoryFactoryBean;
+import com.panhb.demo.service.base.BaseServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -13,6 +15,8 @@ import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,6 +31,7 @@ import com.panhb.demo.constants.Constants;
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement
+@EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
 
 	/**

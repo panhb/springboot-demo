@@ -2,6 +2,8 @@ package com.panhb.demo.service;
 
 import java.util.List;
 
+import com.panhb.demo.model.page.PageInfo;
+import com.panhb.demo.model.result.PageResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.panhb.demo.entity.User;
@@ -29,5 +31,7 @@ public interface UserService extends BaseService<User,Long>{
 	public void deleteAll();
 	
 	public User findByUserName(String userName);
+
+	public PageResult<User> pageBySql(String sql, PageInfo pageInfo, Class<User> mappedClass);
 
 }

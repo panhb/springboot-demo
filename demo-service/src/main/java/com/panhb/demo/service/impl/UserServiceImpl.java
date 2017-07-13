@@ -3,6 +3,8 @@ package com.panhb.demo.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.panhb.demo.model.page.PageInfo;
+import com.panhb.demo.model.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +60,11 @@ public class UserServiceImpl extends BaseServiceImpl<User,Long> implements UserS
 	@Override
 	public User findByUserName(String userName) {
 		return userRepository.findByUserName(userName);
+	}
+
+	@Override
+	public PageResult<User> pageBySql(String sql, PageInfo pageInfo, Class<User> mappedClass) {
+		return userRepository.pageBySql(sql,pageInfo,mappedClass);
 	}
 
 }
