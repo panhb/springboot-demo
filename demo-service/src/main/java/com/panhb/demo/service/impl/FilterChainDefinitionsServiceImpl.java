@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.panhb.demo.dao.PermissionRepository;
 import com.panhb.demo.entity.Permission;
 import com.panhb.demo.service.FilterChainDefinitionsService;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;

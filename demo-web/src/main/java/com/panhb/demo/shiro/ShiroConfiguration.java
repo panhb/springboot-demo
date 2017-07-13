@@ -1,13 +1,11 @@
 package com.panhb.demo.shiro;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 import com.panhb.demo.constants.Constants;
 import com.panhb.demo.dao.PermissionRepository;
 import com.panhb.demo.entity.Permission;
-import com.panhb.demo.service.PermissionService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;

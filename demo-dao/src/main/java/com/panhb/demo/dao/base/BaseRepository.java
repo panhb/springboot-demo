@@ -15,11 +15,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface BaseRepository<T,ID extends Serializable> extends JpaRepository<T, ID>,JpaSpecificationExecutor<T> {
 
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,Class<T> mappedClass);
-
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass);
-
-	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass);
-
 	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass);
+
 }

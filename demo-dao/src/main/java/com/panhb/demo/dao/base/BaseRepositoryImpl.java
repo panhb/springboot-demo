@@ -30,18 +30,6 @@ public class BaseRepositoryImpl<T,ID extends Serializable> extends SimpleJpaRepo
 		this.entityManager = em;
 	}
 
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,Class<T> mappedClass){
-		return pageBySql(sql, new Object[]{}, pageInfo, mappedClass);
-	}
-
-	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass){
-		return pageBySql(sql, objs, pageInfo, "" , mappedClass);
-	}
-
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass){
-		return pageBySql(sql, new Object[]{}, pageInfo, "" , mappedClass);
-	}
-
 	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass){
 		JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
 		int pageNum = pageInfo.getPageNo();

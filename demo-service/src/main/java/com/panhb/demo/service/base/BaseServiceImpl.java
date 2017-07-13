@@ -1,8 +1,11 @@
 package com.panhb.demo.service.base;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.panhb.demo.utils.SpringUtils;
 import org.springframework.stereotype.Service;
 
 import com.panhb.demo.dao.base.BaseRepository;
@@ -10,21 +13,81 @@ import com.panhb.demo.model.page.PageInfo;
 import com.panhb.demo.model.result.PageResult;
 
 @Service
-public class BaseServiceImpl<T,ID extends Serializable> implements BaseService<T,ID>{
+public class BaseServiceImpl<R extends BaseRepository,T,ID extends Serializable> implements BaseService<R,T,ID>{
 
-//	@Autowired
-//	private BaseRepository<T,ID> baseRepository;
-//
-//	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,Class<T> mappedClass){
-//		return pageBySql(sql,new Object[]{},pageInfo,mappedClass);
-//	}
-//
-//	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass){
-//		return pageBySql(sql,objs,pageInfo,"",mappedClass);
-//	}
-//
-//	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass){
-//		return baseRepository.pageBySql(sql, objs, pageInfo, sort, mappedClass);
-//	}
+    private BaseRepository baseRepository;
+
+    private BaseRepository getBaseRepository(){
+        Class<R> entityClass = null;
+        Type t = getClass().getGenericSuperclass();
+        if(t instanceof ParameterizedType){
+            Type[] p = ((ParameterizedType)t).getActualTypeArguments();
+            entityClass = (Class<R>)p[0];
+        }
+        baseRepository = SpringUtils.getBean(entityClass);
+        return baseRepository;
+    }
+
+
+    @Override
+    public T findById(Long id) {
+        return (T)getBaseRepository().findOne(id);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return getBaseRepository().findAll();
+    }
+
+    @Override
+    public T save(T entity) {
+        return (T)getBaseRepository().save(entity);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return getBaseRepository().exists(id);
+    }
+
+    @Override
+    public long count() {
+        return getBaseRepository().count();
+    }
+
+    @Override
+    public void delete(Long id) {
+        getBaseRepository().delete(id);
+    }
+
+    @Override
+    public void delete(T entity) {
+        getBaseRepository().delete(entity);
+    }
+
+    @Override
+    public void delete(List<T> entities) {
+        getBaseRepository().delete(entities);
+    }
+
+    @Override
+    public void deleteAll() {
+        getBaseRepository().deleteAll();
+    }
+
+    public PageResult<T> pageBySql(String sql, PageInfo pageInfo, Class<T> mappedClass){
+		return pageBySql(sql,new Object[]{},pageInfo,mappedClass);
+	}
+
+	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass){
+		return pageBySql(sql,objs,pageInfo,"",mappedClass);
+	}
+
+    public PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass){
+        return pageBySql(sql,new Object[]{},pageInfo,sort,mappedClass);
+    }
+
+	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass){
+		return getBaseRepository().pageBySql(sql, objs, pageInfo, sort, mappedClass);
+	}
 
 }

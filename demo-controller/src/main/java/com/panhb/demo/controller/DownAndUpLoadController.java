@@ -4,7 +4,6 @@ import com.google.common.io.Files;
 import com.panhb.demo.controller.base.BaseController;
 import com.panhb.demo.model.result.Result;
 import com.panhb.demo.utils.FileUtils;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletInputStream;
 import java.io.*;
 import java.util.UUID;
 
