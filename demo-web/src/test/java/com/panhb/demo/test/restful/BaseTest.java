@@ -24,7 +24,4 @@ public class BaseTest {
 	public static void afterAll(){
 	}
 	
-	@Test
-	public void test(){
-	}
 }
