@@ -2,9 +2,7 @@ package com.panhb.demo.utils;
 
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import com.sun.prism.shader.FillEllipse_Color_AlphaTest_Loader;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
