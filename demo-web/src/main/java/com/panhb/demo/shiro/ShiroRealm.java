@@ -1,5 +1,6 @@
 package com.panhb.demo.shiro;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -8,10 +9,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class ShiroRealm extends AuthorizingRealm{
 	
-	private static final Logger log = LoggerFactory.getLogger(ShiroRealm.class);
-
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		log.info("******执行Shiro权限认证******");

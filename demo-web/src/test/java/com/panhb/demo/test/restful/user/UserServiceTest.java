@@ -13,6 +13,6 @@ public class UserServiceTest extends BaseTest {
 	
 	@Test
 	public void testUserQuery() {
-		System.out.println(userService.findByUserName("2"));
+		System.out.println(userService.findByUsername("2"));
 	}
 }

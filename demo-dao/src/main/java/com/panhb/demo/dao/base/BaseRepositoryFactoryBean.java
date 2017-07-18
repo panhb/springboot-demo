@@ -21,7 +21,6 @@ public class BaseRepositoryFactoryBean<R extends JpaRepository<S, ID>, S, ID ext
     @Override
     protected RepositoryFactorySupport createRepositoryFactory(
             EntityManager entityManager) {
-        // TODO Auto-generated method stub
         return new BaseRepositoryFactory(entityManager);
     }
 
@@ -35,13 +34,11 @@ public class BaseRepositoryFactoryBean<R extends JpaRepository<S, ID>, S, ID ext
         @Override
         protected <T, ID extends Serializable> SimpleJpaRepository<?, ?> getTargetRepository(RepositoryInformation metadata,
                                                                                              EntityManager entityManager) {
-            // TODO Auto-generated method stub
             return new BaseRepositoryImpl(metadata.getDomainType(), entityManager);
         }
 
         @Override
         protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-            // TODO Auto-generated method stub
             return BaseRepository.class;
         }
 

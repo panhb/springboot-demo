@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.panhb.demo.dao.PermissionRepository;
 import com.panhb.demo.entity.Permission;
 import com.panhb.demo.service.FilterChainDefinitionsService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
@@ -22,9 +23,8 @@ import java.util.Map;
  * Created by admin on 2017/6/9.
  */
 @Service
+@Slf4j
 public class FilterChainDefinitionsServiceImpl implements FilterChainDefinitionsService {
-
-    private static final Logger log = LoggerFactory.getLogger(FilterChainDefinitionsServiceImpl.class);
 
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.panhb.demo.utils.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -25,11 +25,10 @@ import com.panhb.demo.constants.Constants;
 import com.panhb.demo.model.page.PageInfo;
 
 @Controller
+@Slf4j
 public class BaseController {
 	
-	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
-	
-	@Autowired  
+	@Autowired
 	public  HttpServletRequest request; 
 	
 	@Autowired  
@@ -124,9 +123,8 @@ public class BaseController {
 	}
 	
 	public void outputFile(File file, String reFileName){
-		OutputStream os = null;
 		try {
-			os = response.getOutputStream();
+			@Cleanup OutputStream os = response.getOutputStream();
 			String userAgent = request.getHeader("User-Agent");  
 			if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {  
 				reFileName = URLEncoder.encode(reFileName, "UTF-8");  
@@ -139,14 +137,6 @@ public class BaseController {
 			Files.copy(file, os);
 		} catch (Exception e) {
 			log.error("", e);
-		} finally{
-			if(os != null){
-				try {
-					os.close();
-				} catch (IOException e) {
-					log.error("", e);
-				}
-			}
 		}
 	}
 	
@@ -229,17 +219,14 @@ public class BaseController {
 					break;
 			}
 		}
-		RandomAccessFile raf = null; // 负责读取数据
-		OutputStream os = null; // 写出数据
-		OutputStream out = null; // 缓冲
 		byte[] b = new byte[1024]; // 暂存容器
 		try {
 			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
 			response.setContentType("application/octet-stream;charset=utf-8");
 			response.setHeader( "Content-Length", String.valueOf(contentLength));
-			os = response.getOutputStream();
-			out = new BufferedOutputStream(os);
-			raf = new RandomAccessFile(file, "r");
+			@Cleanup OutputStream os = response.getOutputStream();  // 写出数据
+			@Cleanup OutputStream out = new BufferedOutputStream(os);  // 缓冲
+			@Cleanup RandomAccessFile raf = new RandomAccessFile(file, "r");  // 负责读取数据
 			try {
 				switch (rangeSwitch) {
 					case 0:
@@ -273,28 +260,6 @@ public class BaseController {
 			}
 		}catch (IOException e){
 			log.error("", e);
-		}finally{
-			if(os != null){
-				try {
-					os.close();
-				} catch (IOException e) {
-					log.error("", e);
-				}
-			}
-			if(out != null){
-				try {
-					out.close();
-				} catch (IOException e) {
-					log.error("", e);
-				}
-			}
-			if(raf  != null){
-				try {
-					raf .close();
-				} catch (IOException e) {
-					log.error("", e);
-				}
-			}
 		}
 	}
 
@@ -305,10 +270,9 @@ public class BaseController {
 	public void printJson(String str){
 		response.setContentType("application/json;charset=utf-8");
 		try {
-			PrintWriter pw = response.getWriter();
+			@Cleanup PrintWriter pw = response.getWriter();
 			pw.write(str);
 			pw.flush();
-			pw.close();
 		} catch (IOException e) {
 			log.error("", e);
 		}

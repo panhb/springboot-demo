@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends BaseRepository<User,Long> {
 	
-	public User findByUserName(@Param(value = "userName") String userName);
+	public User findByUsername(@Param(value = "username") String username);
 
 }

@@ -29,16 +29,16 @@ public class User extends BaseModel{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String userName;
+	private String username;
 	@JsonIgnore
-	private String passWord;
+	private String password;
 	private Date createDate;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "t_user_role",
-		joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName ="id")})
-	private List<Role> roles;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinTable(name = "t_user_role",
+//		joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName ="id")})
+//	private List<Role> roles;
 	
 //	public Long getId() {
 //		return id;

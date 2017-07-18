@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.panhb.demo.constants.Constants;
 import com.panhb.demo.dao.PermissionRepository;
 import com.panhb.demo.entity.Permission;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -35,10 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
+@Slf4j
 public class ShiroConfiguration {
 	
-	private static final Logger log = LoggerFactory.getLogger(ShiroConfiguration.class);
-
 	@Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();

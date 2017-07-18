@@ -10,6 +10,6 @@ import com.panhb.demo.service.base.BaseService;
 public interface UserService extends BaseService<UserRepository,User,Long>{
 	
 
-	public User findByUserName(String userName);
+	public User findByUsername(String username);
 
 }

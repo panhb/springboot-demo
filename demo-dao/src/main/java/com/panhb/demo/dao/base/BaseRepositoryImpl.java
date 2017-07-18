@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.panhb.demo.utils.SpringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -16,10 +17,9 @@ import com.panhb.demo.model.result.PageResult;
 
 import javax.persistence.EntityManager;
 
+@Slf4j
 public class BaseRepositoryImpl<T,ID extends Serializable> extends SimpleJpaRepository<T,ID> implements BaseRepository<T,ID>{
 
-	private static final Logger log = LoggerFactory.getLogger(BaseRepositoryImpl.class);
-	
 	/**
 	 * 持久化上下文
 	 */

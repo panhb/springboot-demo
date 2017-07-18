@@ -1,6 +1,7 @@
 package com.panhb.demo.controller;
 
 import com.panhb.demo.model.result.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController extends BaseController{
 
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
-	
 	@Autowired
 	private UserService userService;
 	

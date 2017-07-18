@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import com.panhb.demo.controller.base.BaseController;
 import com.panhb.demo.model.result.Result;
 import com.panhb.demo.utils.FileUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/load")
+@Slf4j
 public class DownAndUpLoadController extends BaseController {
-
-    private static final Logger log = LoggerFactory.getLogger(DownAndUpLoadController.class);
 
     @RequestMapping("/down")
     public void down(){
