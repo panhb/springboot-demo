@@ -29,8 +29,9 @@ public class LoadTest extends BaseTest {
 
 	private RestTemplate template = new RestTemplate();
 
-	private static final String URL = "http://127.0.0.1:8080/load/";
-	
+//	private static final String URL = "http://127.0.0.1:8080/load/";
+	private static final String URL = "https://127.0.0.1:8443/load/";
+
 //	@Test
 	public void testDownLoad() throws Exception{
 		String url = URL + "down";
