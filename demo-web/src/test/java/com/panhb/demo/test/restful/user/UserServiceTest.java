@@ -58,7 +58,7 @@ public class UserServiceTest extends BaseTest {
 		System.out.println(result);
 	}
 
-	@Test
+//	@Test
 	public void testFindAll2() throws Exception{
 		String keyStorePassword = "123456";
 		InputStream keyStoreFile = UserServiceTest.class.getResourceAsStream("/keystore.p12");
@@ -76,6 +76,16 @@ public class UserServiceTest extends BaseTest {
 
 		HttpPost httpPost = new HttpPost(URL+"findAll");
 		HttpResponse response = httpClient.execute(httpPost);
+		String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+		System.out.println("result:" + result);
+	}
+
+//	@Test
+	public void testFindAll3() throws Exception{
+		HttpClient httpClient = HttpClients.custom().build();
+		HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/user/findAll");
+		HttpResponse response = httpClient.execute(httpPost);
+		//重定向了  输出是空   302
 		String result = EntityUtils.toString(response.getEntity(), "UTF-8");
 		System.out.println("result:" + result);
 	}

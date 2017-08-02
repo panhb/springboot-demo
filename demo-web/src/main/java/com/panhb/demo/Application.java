@@ -2,26 +2,16 @@ package com.panhb.demo;
 
 import java.util.Locale;
 
-import javax.servlet.MultipartConfigElement;
 
 import com.panhb.demo.dao.base.BaseRepositoryFactoryBean;
-import com.panhb.demo.service.base.BaseServiceImpl;
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ErrorPage;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -32,7 +22,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.panhb.demo.constants.Constants;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -79,36 +68,6 @@ public class Application {
 	            container.addErrorPages(error404Page, error500Page);
 	        }
 	    };
-	}
-
-	/**
-	 * 将HTTP请求重定向到HTTPS
-	 * @return
-	 */
-	@Bean
-	public EmbeddedServletContainerFactory servletContainer() {
-		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
-			@Override
-			protected void postProcessContext(Context context) {
-				SecurityConstraint securityConstraint = new SecurityConstraint();
-				securityConstraint.setUserConstraint("CONFIDENTIAL");
-				SecurityCollection collection = new SecurityCollection();
-				collection.addPattern("/*");
-				securityConstraint.addCollection(collection);
-				context.addConstraint(securityConstraint);
-			}
-		};
-		tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
-		return tomcat;
-	}
-
-	private Connector initiateHttpConnector() {
-		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-		connector.setScheme("http");
-		connector.setPort(8080);
-		connector.setSecure(false);
-		connector.setRedirectPort(8443);
-		return connector;
 	}
 
 	public static void main(String[] args) {
