@@ -19,3 +19,15 @@ openssl pkcs12 -export -in server.crt -inkey server.key -out server.pkcs12
 //生成服务端的keystore（.jks文件, 非必要，Java程序通常使用该格式的证书）生成过程中，需要创建访问密码，请记录下来。 把ca证书放到keystore中（非必要） 
 keytool -importkeystore -srckeystore server.pkcs12 -destkeystore server.jks -srcstoretype pkcs12 
 keytool -importcert -keystore server.jks -file ca.crt
+
+
+
+javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure 解决方案
+这个是jdk导致的，jdk里面有一个jce的包，安全性机制导致的访问https会报错，官网上有替代的jar包，换掉就好了
+目录 %JAVA_HOME%\jre\lib\security里的local_policy.jar,US_export_policy.jar
+JDK7 http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html
+JDK8 http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+
+
+keytool -import -alias example -keystore  D:\Program Files\Java\jdk1.8.0_121\jre\lib\security\cacerts -file example.cer
+密码：changeit
