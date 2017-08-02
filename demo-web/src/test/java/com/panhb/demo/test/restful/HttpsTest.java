@@ -37,17 +37,7 @@ public class HttpsTest {
 	@Test
 	public void testHttps() throws Exception{
 		//采用绕过验证的方式处理https请求
-		SSLContext sslcontext = createIgnoreVerifySSL();
-		CloseableHttpClient httpClient = HttpClients.custom().setSSLHostnameVerifier(new NoopHostnameVerifier()).setSSLContext(sslcontext).build();
-		//创建自定义的httpclient对象
-		HttpGet httpGet = new HttpGet("https://127.0.0.1:8443/user/findAll");
-		HttpResponse response = httpClient.execute(httpGet);
-		String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-		System.out.println("result:" + result);
-	}
-
-	public SSLContext createIgnoreVerifySSL() throws NoSuchAlgorithmException, KeyManagementException {
-		SSLContext sc = SSLContext.getInstance("SSLv3");
+		SSLContext sslcontext = SSLContext.getInstance("SSLv3");
 		// 实现一个X509TrustManager接口，用于绕过验证，不用修改里面的方法
 		X509TrustManager trustManager = new X509TrustManager() {
 			@Override
@@ -65,9 +55,16 @@ public class HttpsTest {
 				return null;
 			}
 		};
-		sc.init(null, new TrustManager[] { trustManager }, null);
-		return sc;
+		sslcontext.init(null, new TrustManager[] { trustManager }, null);
+		CloseableHttpClient httpClient = HttpClients.custom().setSSLHostnameVerifier(new NoopHostnameVerifier()).setSSLContext(sslcontext).build();
+		//创建自定义的httpclient对象
+		HttpGet httpGet = new HttpGet("https://127.0.0.1:8443/user/findAll");
+		HttpResponse response = httpClient.execute(httpGet);
+		String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+		System.out.println("result:" + result);
 	}
+
+
 
 
 }
