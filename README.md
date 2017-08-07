@@ -31,3 +31,9 @@ JDK8 http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-21331
 
 keytool -import -alias example -keystore  D:\Program Files\Java\jdk1.8.0_121\jre\lib\security\cacerts -file example.cer
 密码：changeit
+
+
+
+302
+HttpClient instance = HttpClientBuilder.create()
+                     .setRedirectStrategy(new LaxRedirectStrategy()).build();
