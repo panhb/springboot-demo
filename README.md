@@ -35,5 +35,16 @@ keytool -import -alias example -keystore  D:\Program Files\Java\jdk1.8.0_121\jre
 
 
 302
-HttpClient instance = HttpClientBuilder.create()
-                     .setRedirectStrategy(new LaxRedirectStrategy()).build();
+HttpClient instance = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build();
+                     
+                     
+nginx做转发时，带'_'的header内容丢失
+- 方法一：不用下划线 
+既然nginx对下划线不支持，那没关系，不用下划线就是了。比如原来”app_version”改成”app-version”就可以了。（难怪一般header的name都是’-‘来拼接的，比如”User-Agent”） 
+- 方法二：从根本接触nginx的限制 
+nginx默认request的header的那么中包含’_’时，会自动忽略掉。 
+解决方法是：在nginx里的nginx.conf配置文件中的http部分中添加如下配置： 
+underscores_in_headers on; （默认 underscores_in_headers 为off）
+                     
+                     
+                
