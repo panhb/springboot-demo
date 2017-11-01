@@ -13,32 +13,113 @@ import com.panhb.demo.model.result.PageResult;
  * @author panhb
  *
  */
-@Transactional
 public interface BaseService<R extends BaseRepository,T,ID extends Serializable> {
 
-    public T findById(Long id);
+    /**
+     * findById
+     *
+     * @param id
+     * @return T
+     */
+    T findById(Long id);
 
-    public List<T> findAll();
+    /**
+     * findAll
+     *
+     * @return List<T>
+     */
+    List<T> findAll();
 
-    public T save(T entity);
+    /**
+     * save
+     *
+     * @param entity
+     * @return T
+     */
+    T save(T entity);
 
-    public boolean exists(Long id);
+    /**
+     * exists
+     *
+     * @param id
+     * @return boolean
+     */
+    boolean exists(Long id);
 
-    public long count();
+    /**
+     * count
+     *
+     * @return long
+     */
+    long count();
 
-    public void delete(Long id);
+    /**
+     * delete
+     *
+     * @param id
+     */
+    void delete(Long id);
 
-    public void delete(T entity);
+    /**
+     * delete
+     *
+     * @param entity
+     */
+    void delete(T entity);
 
-    public void delete(List<T> entities);
+    /**
+     * delete
+     *
+     * @param entities
+     */
+    void delete(List<T> entities);
 
-    public void deleteAll();
-	
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,Class<T> mappedClass);
+    /**
+     * deleteAll
+     */
+    void deleteAll();
 
-	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass);
+    /**
+     * pageBySql
+     *
+     * @param sql
+     * @param pageInfo
+     * @param mappedClass
+     * @return PageResult<T>
+     */
+    PageResult<T> pageBySql(String sql,PageInfo pageInfo,Class<T> mappedClass);
 
-	public PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass);
+    /**
+     * pageBySql
+     *
+     * @param sql
+     * @param objs
+     * @param pageInfo
+     * @param mappedClass
+     * @return PageResult<T>
+     */
+    PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass);
 
-	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass);
+    /**
+     * pageBySql
+     *
+     * @param sql
+     * @param pageInfo
+     * @param sort
+     * @param mappedClass
+     * @return PageResult<T>
+     */
+    PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass);
+
+    /**
+     * pageBySql
+     *
+     * @param sql
+     * @param objs
+     * @param pageInfo
+     * @param sort
+     * @param mappedClass
+     * @return PageResult<T>
+     */
+    PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass);
 }

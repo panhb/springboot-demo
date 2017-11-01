@@ -1,9 +1,12 @@
 package com.panhb.demo.service;
 
 /**
- * Created by admin on 2017/6/9.
+ * @author panhb
  */
 public interface FilterChainDefinitionsService {
 
-    public void reloadFilterChains();
+    /**
+     * reloadFilterChains
+     */
+    void reloadFilterChains();
 }

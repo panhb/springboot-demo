@@ -1,15 +1,21 @@
 package com.panhb.demo.service;
 
 import com.panhb.demo.dao.UserRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.panhb.demo.entity.User;
 import com.panhb.demo.service.base.BaseService;
 
-@Transactional
+/**
+ * @author panhb
+ */
 public interface UserService extends BaseService<UserRepository,User,Long>{
-	
 
-	public User findByUsername(String username);
+	/**
+	 * findByUsername
+	 *
+	 * @param username
+	 * @return User
+	 */
+	User findByUsername(String username);
 
 }

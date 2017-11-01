@@ -13,7 +13,9 @@ import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
 
-
+/**
+ * @author panhb
+ */
 public class ZipUtils {
     /**
      * 防止压缩文件名中文乱码
@@ -78,7 +80,7 @@ public class ZipUtils {
      *  
      * @param srcFile 
      *            源路径 
-     * @param destPath 
+     * @param destFile
      *            目标路径 
      * @throws Exception 
      */  
@@ -164,13 +166,16 @@ public class ZipUtils {
          * 如果用WinRAR打开压缩包，中文名将显示为乱码 
          * </pre> 
          */  
-        if("/".equals(dir))dir="";  
-        else if(dir.startsWith("/"))dir=dir.substring(1,dir.length());  
+        if("/".equals(dir)){
+            dir="";
+        }else if(dir.startsWith("/")) {
+            dir=dir.substring(1,dir.length());
+        }
         ZipEntry entry = new ZipEntry(dir + file.getName());  
         zos.putNextEntry(entry);  
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));  
         int count;  
-        byte data[] = new byte[BUFFER];  
+        byte[] data = new byte[BUFFER];
         while ((count = bis.read(data, 0, BUFFER)) != -1) {  
             zos.write(data, 0, count);  
         }  

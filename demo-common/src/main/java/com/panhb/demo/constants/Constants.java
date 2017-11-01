@@ -1,6 +1,8 @@
 package com.panhb.demo.constants;
 
-
+/**
+ * @author panhb
+ */
 public class Constants {
 	
 	public static final int ERROR = 1;

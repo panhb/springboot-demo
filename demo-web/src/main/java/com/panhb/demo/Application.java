@@ -23,6 +23,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
+/**
+ * @author panhb
+ */
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement
@@ -62,6 +65,7 @@ public class Application {
 	@Bean
 	public EmbeddedServletContainerCustomizer containerCustomizer() {
 	    return new EmbeddedServletContainerCustomizer() {
+	    	@Override
 	        public void customize(ConfigurableEmbeddedServletContainer container) {
 	            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
 	            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500");

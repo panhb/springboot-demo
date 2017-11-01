@@ -3,12 +3,14 @@ package com.panhb.demo.utils;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 
+/**
+ * @author panhb
+ */
 public class FileCharsetDetector {
 	
 	private static boolean found = false;
@@ -29,10 +31,9 @@ public class FileCharsetDetector {
      * @param file
      *            File对象实例
      * @return 文件编码，若无，则返回null
-     * @throws FileNotFoundException
      * @throws IOException
      */
-    public static String guessFileEncoding(File file) throws FileNotFoundException, IOException {
+    public static String guessFileEncoding(File file) throws  IOException {
         return guessFileEncoding(file, new nsDetector());
     }
 
@@ -52,10 +53,9 @@ public class FileCharsetDetector {
      * </pre>
      * 
      * @return 文件编码，eg：UTF-8,GBK,GB2312形式(不确定的时候，返回可能的字符编码序列)；若无，则返回null
-     * @throws FileNotFoundException
      * @throws IOException
      */
-    public static String guessFileEncoding(File file, int languageHint) throws FileNotFoundException, IOException {
+    public static String guessFileEncoding(File file, int languageHint) throws IOException {
         return guessFileEncoding(file, new nsDetector(languageHint));
     }
 
@@ -65,11 +65,11 @@ public class FileCharsetDetector {
      * @param file
      * @param det
      * @return
-     * @throws FileNotFoundException
      * @throws IOException
      */
-    private static String guessFileEncoding(File file, nsDetector det) throws FileNotFoundException, IOException {
+    private static String guessFileEncoding(File file, nsDetector det) throws IOException {
         det.Init(new nsICharsetDetectionObserver() {
+            @Override
             public void Notify(String charset) {
                 encoding = charset;
                 found = true;

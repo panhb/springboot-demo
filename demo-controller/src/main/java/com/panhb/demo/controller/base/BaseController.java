@@ -24,6 +24,9 @@ import com.google.common.io.Files;
 import com.panhb.demo.constants.Constants;
 import com.panhb.demo.model.page.PageInfo;
 
+/**
+ * @author panhb
+ */
 @Controller
 @Slf4j
 public class BaseController {
@@ -117,8 +120,9 @@ public class BaseController {
 	
 	public String getRealIpV2() {
 		String accessIP = request.getHeader("x-forwarded-for");
-        if (null == accessIP)
-            return request.getRemoteAddr();
+        if (null == accessIP){
+			return request.getRemoteAddr();
+		}
         return accessIP;
 	}
 	
@@ -149,10 +153,12 @@ public class BaseController {
 		if (uploadFile != null && !uploadFile.isEmpty()) {
 			try {
 				File file = new File(destPath);
-				if(file.exists())
+				if(file.exists()){
 					file.delete();
-				if(!file.getParentFile().exists())
+				}
+				if(!file.getParentFile().exists()){
 					file.getParentFile().mkdirs();
+				}
 				Files.write(uploadFile.getBytes(), file);
 				return file;
 			}catch (Exception e) {
@@ -187,7 +193,8 @@ public class BaseController {
 				rangeSwitch = 1;
 				rangeBytes = rangeBytes.split("-")[0].trim();
 				pastLength = Long.parseLong(rangeBytes.trim());
-				contentLength = fileLength - pastLength; // 客户端请求的是 969998336 之后的字节
+				// 客户端请求的是 969998336 之后的字节
+				contentLength = fileLength - pastLength;
 			} else { // bytes=1275856879-1275877358
 				rangeSwitch = 2;
 				String temp0 = rangeBytes.split("-")[0].trim();
@@ -219,14 +226,18 @@ public class BaseController {
 					break;
 			}
 		}
-		byte[] b = new byte[1024]; // 暂存容器
+		// 暂存容器
+		byte[] b = new byte[1024];
 		try {
 			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
 			response.setContentType("application/octet-stream;charset=utf-8");
 			response.setHeader( "Content-Length", String.valueOf(contentLength));
-			@Cleanup OutputStream os = response.getOutputStream();  // 写出数据
-			@Cleanup OutputStream out = new BufferedOutputStream(os);  // 缓冲
-			@Cleanup RandomAccessFile raf = new RandomAccessFile(file, "r");  // 负责读取数据
+			// 写出数据
+			@Cleanup OutputStream os = response.getOutputStream();
+			// 缓冲
+			@Cleanup OutputStream out = new BufferedOutputStream(os);
+			// 负责读取数据
+			@Cleanup RandomAccessFile raf = new RandomAccessFile(file, "r");
 			try {
 				switch (rangeSwitch) {
 					case 0:
@@ -240,8 +251,10 @@ public class BaseController {
 					case 2:
 						raf.seek(pastLength);
 						int m = 0;
-						long readLength = 0; // 记录已读字节数
-						while (readLength <= contentLength - 1024) {// 大部分字节在这里读取
+						// 记录已读字节数
+						long readLength = 0;
+						// 大部分字节在这里读取
+						while (readLength <= contentLength - 1024) {
 							m = raf.read(b, 0, 1024);
 							readLength += 1024;
 							out.write(b, 0, m);

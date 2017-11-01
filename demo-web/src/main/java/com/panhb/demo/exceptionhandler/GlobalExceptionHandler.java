@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.panhb.demo.model.result.Result;
 
-
+/**
+ * @author panhb
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {

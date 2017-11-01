@@ -11,8 +11,13 @@ import org.springframework.stereotype.Service;
 import com.panhb.demo.dao.base.BaseRepository;
 import com.panhb.demo.model.page.PageInfo;
 import com.panhb.demo.model.result.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author panhb
+ */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BaseServiceImpl<R extends BaseRepository,T,ID extends Serializable> implements BaseService<R,T,ID>{
 
     private BaseRepository baseRepository;
@@ -74,18 +79,22 @@ public class BaseServiceImpl<R extends BaseRepository,T,ID extends Serializable>
         getBaseRepository().deleteAll();
     }
 
+    @Override
     public PageResult<T> pageBySql(String sql, PageInfo pageInfo, Class<T> mappedClass){
 		return pageBySql(sql,new Object[]{},pageInfo,mappedClass);
 	}
 
+    @Override
 	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,Class<T> mappedClass){
 		return pageBySql(sql,objs,pageInfo,"",mappedClass);
 	}
 
+    @Override
     public PageResult<T> pageBySql(String sql,PageInfo pageInfo,String sort,Class<T> mappedClass){
         return pageBySql(sql,new Object[]{},pageInfo,sort,mappedClass);
     }
 
+    @Override
 	public PageResult<T> pageBySql(String sql,Object[] objs,PageInfo pageInfo,String sort,Class<T> mappedClass){
 		return getBaseRepository().pageBySql(sql, objs, pageInfo, sort, mappedClass);
 	}

@@ -11,19 +11,19 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by admin on 2017/6/9.
+ * @author panhb
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class FilterChainDefinitionsServiceImpl implements FilterChainDefinitionsService {
 
     @Autowired

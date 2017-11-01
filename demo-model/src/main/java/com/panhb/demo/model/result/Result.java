@@ -1,8 +1,12 @@
 package com.panhb.demo.model.result;
 
 import com.panhb.demo.constants.Constants;
+import com.panhb.demo.model.base.BaseModel;
 
-public class Result {
+/**
+ * @author panhb
+ */
+public class Result extends BaseModel {
 	
 	public Result() {
 	}

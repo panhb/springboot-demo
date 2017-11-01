@@ -3,6 +3,9 @@ package com.panhb.demo.model.page;
 import com.google.common.base.MoreObjects;
 import com.panhb.demo.model.base.BaseModel;
 
+/**
+ * @author panhb
+ */
 public class PageInfo extends BaseModel{
 	
 	private static final long serialVersionUID = -5406259081088515055L;
@@ -42,7 +45,8 @@ public class PageInfo extends BaseModel{
 		this.pageSize = pageSize;
 		this.totalRow = totalRow;
 	}
-	
+
+	@Override
 	public String toString(){
 		return MoreObjects.toStringHelper(this)
 				.add("pageNo", pageNo)

@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import com.panhb.demo.model.base.BaseModel;
 import lombok.Data;
 
+/**
+ * @author panhb
+ */
 @Entity
 @Table(name = "t_role")
 @Data

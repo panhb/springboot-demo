@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 
 /**
- * Created by admin on 2017/6/30.
+ * @author panhb
  */
 public class FileUtils {
 

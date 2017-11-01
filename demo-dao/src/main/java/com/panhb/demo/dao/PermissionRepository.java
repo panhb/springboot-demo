@@ -5,6 +5,9 @@ import com.panhb.demo.entity.Permission;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author panhb
+ */
 @RepositoryRestResource(path = "permission")
 @Repository
 public interface PermissionRepository extends BaseRepository<Permission,Long> {

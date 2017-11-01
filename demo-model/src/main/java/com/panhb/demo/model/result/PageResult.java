@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.common.base.MoreObjects;
 import com.panhb.demo.model.page.PageInfo;
 
+/**
+ * @author panhb
+ */
 public class PageResult<T> extends PageInfo{
 	
 	private static final long serialVersionUID = -2797911553763185618L;
@@ -26,6 +29,7 @@ public class PageResult<T> extends PageInfo{
 		this.list = list;
 	}
 
+	@Override
 	public String toString(){
 		return MoreObjects.toStringHelper(this)
 				.add("pageNo", getPageNo())

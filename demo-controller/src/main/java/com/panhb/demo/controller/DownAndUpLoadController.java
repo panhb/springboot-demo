@@ -83,10 +83,12 @@ public class DownAndUpLoadController extends BaseController {
         File[] files = dirFile.listFiles();
         String apkPath = dirPath+ File.separator + fileName;
         if(chunkNum > 1){
-            if(files.length == chunkNum){//如果文件数等于分片数开始合并
+            //如果文件数等于分片数开始合并
+            if(files.length == chunkNum){
                 String[] fapths = new String[chunkNum];
-                for(int i = 1 ; i <= chunkNum;i++)
+                for(int i = 1 ; i <= chunkNum;i++){
                     fapths[i-1] = dirPath + File.separator + i;
+                }
                 FileUtils.mergeFiles(fapths,apkPath);
             }else{
                 printJson(Result.success("分片上传成功",chunkIndex));

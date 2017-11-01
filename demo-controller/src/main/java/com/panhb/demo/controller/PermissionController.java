@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author panhb
+ */
 @RestController
 @RequestMapping("/permission")
 @Slf4j

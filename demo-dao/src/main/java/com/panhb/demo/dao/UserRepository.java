@@ -7,10 +7,19 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import com.panhb.demo.entity.User;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author panhb
+ */
 @RepositoryRestResource(path = "user")
 @Repository
 public interface UserRepository extends BaseRepository<User,Long> {
-	
-	public User findByUsername(@Param(value = "username") String username);
+
+	/**
+	 * findByUsername
+	 *
+	 * @param username
+	 * @return User
+	 */
+	User findByUsername(@Param(value = "username") String username);
 
 }
