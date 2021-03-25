@@ -30,7 +30,7 @@
 		<druid.version>1.0.29</druid.version>
 		<jchardet.version>1.0</jchardet.version>
 		<swagger2.version>2.6.1</swagger2.version>
-		<ant.version>1.9.4</ant.version>
+		<ant.version>1.10.9</ant.version>
 		<shiro.version>1.4.0</shiro.version>
 		<commons.httpclient.version>3.1</commons.httpclient.version>
 		<lombok.version>1.16.18</lombok.version>
